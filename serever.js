@@ -3,7 +3,13 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const User = require('./models/createModel.js');
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
 
+
+dotenv.config();
+
+const expiresKey = process.env.SECRET_KEY;
 
 const app = express();
 
@@ -54,6 +60,19 @@ app.get('/users/:id', async(req, res) => {
     }
 })
 
+app.get ('/users', async(req, res) => {
+
+    const filter = {};
+    const user = await User.find(filter);
+
+    if (user) {
+        res.status(200).send(user);
+    }
+    else {
+        res.status(404).send("Empty User, please fill up first");
+    }
+})
+
 app.put('/users/:id', async(req, res) => {
     const { id } = req.params;
     const { name, email, password }= req.body;
@@ -79,6 +98,26 @@ app.delete('/users/:id', async(req, res) => {
     res.status(500).send(error);
 }
 
-})
+});
 
+
+//Json Web Token
+app.post('/login', async (req, res) => {
+
+    try {
+    const { email, password } = req.body;
+
+    const user =  await User.findOne(e => e.email === email && e.password === password);
+
+    if (user) {
+       const token =  jwt.sign({id: User.id, email: User.email}, expiresKey, {expiresIn: '1h'} );
+        res.json({token, user});
+    }
+    else {
+        res.status(401).send("Unauthorized access");
+    }
+}catch(error) {
+    res.status(500).send(error);
+}
+})
 

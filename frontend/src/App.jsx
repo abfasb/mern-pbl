@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -6,7 +6,21 @@ import './input.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+    try {
+      const storeData = await axios.get('http://localhost:5000/users');
+      setData(storeData.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchData();
+  }, [])
   return (
     <>
       <div>
@@ -29,7 +43,18 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <p className=' text-red-500 text-lg'>Hello world</p>
+      <p className=' text-red-500 text-lg'>hello world</p>
+      {data.length > 0 ? (
+        <ul>
+          {data.map((user) => {
+            <li key={user._id}>
+              {user.name} and {user.email}
+            </li>
+          })}
+        </ul>
+      ) : (
+        <p>No user/s found.</p>
+      )}
     </>
   )
 }
