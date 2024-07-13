@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import './input.css'
+import { useEffect, useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import './input.css';
+import axios from 'axios';
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +16,7 @@ function App() {
     try {
       const storeData = await axios.get('http://localhost:5000/users');
       setData(storeData.data);
+      console.log("Connected");
     } catch (error) {
       console.log(error);
     }

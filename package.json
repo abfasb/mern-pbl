@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon serever.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon serever.js",
+    "client": "cd frontend && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,5 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
