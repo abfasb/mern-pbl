@@ -6,7 +6,6 @@ const User = require('./models/createModel.js');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 
-
 dotenv.config();
 
 const expiresKey = process.env.SECRET_KEY;
@@ -65,7 +64,7 @@ app.get ('/users', async(req, res) => {
     const filter = {};
     const user = await User.find(filter);
 
-    if (user) {
+    if (user.length > 0) {
         res.status(200).send(user);
     }
     else {
