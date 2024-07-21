@@ -20,7 +20,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.7.0",
-    "mongoose": "^8.4.4"
+    "mongoose": "^8.4.4",
+    "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

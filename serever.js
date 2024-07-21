@@ -30,10 +30,12 @@ mongoose.connect(uri)
         console.error('Something went wrong:', error);
     });
 
+
 app.get('/', (req, res) => {
     console.log('Hello World');
     res.send('Hello World');
 });
+
 app.post('/users', async (req, res) => {
     try {
         const {name, email, password} = req.body;
@@ -45,6 +47,8 @@ app.post('/users', async (req, res) => {
         res.status(400).send(error);
     }
 })
+
+
 app.get('/users/:id', async(req, res) => {
     try {
         const { id } = req.params;
