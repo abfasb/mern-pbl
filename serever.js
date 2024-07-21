@@ -103,6 +103,19 @@ app.delete('/users/:id', async(req, res) => {
 
 });
 
+app.get('/items/:id', async(req, res) => {
+    try {
+        const findId = await User.findById(req.params.id);
+        if (!findId) {
+            return res.status(404).send("Id not Found.");
+        }
+        res.json(findId);
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
+})
+
 
 //Json Web Token
 app.post('/login', async (req, res) => {
